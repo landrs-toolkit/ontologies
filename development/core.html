@@ -193,6 +193,11 @@
     "@type": [
       "https://schema.org/DefinedTermSet"
     ],
+    "https://schema.org/codeRepository": [
+      {
+        "@id": "https://github.com/landrs-toolkit/ontologies"
+      }
+    ],
     "https://schema.org/description": [
       {
         "@value": "<p>This ontology is developed as part of the Sloan Funded LANDRS project to advance UxV data interoperability</p>"
@@ -262,6 +267,8 @@
         <dd>&copy; 2020 University of Notre Dame.</dd>
         <dt>Ontology RDF</dt>
         <dd><a href="core.ttl">RDF (turtle)</a></dd>
+        <dt>Code Repository</dt>
+        <dd><a href="https://github.com/landrs-toolkit/ontologies">https://github.com/landrs-toolkit/ontologies</a></dd>
     </dl>
     <h2>Description</h2>
     <div id="description">
@@ -288,6 +295,8 @@
     <h2>Classes <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
     <ul class="hlist">
         <li><a href="#Agent">Agent</a></li>
+        <li><a href="#Event">Event</a></li>
+        <li><a href="#Flight">Flight</a></li>
         <li><a href="#Vocabulary">Vocabulary</a></li>
     </ul>
     <div class="entity class" id="Vocabulary">
@@ -305,6 +314,60 @@
             <tr>
                 <th>URI</th>
                 <td><code>http://xmlns.com/foaf/0.1/Agent</code></td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Event">
+        <h3>Event<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://w3id.org/landrs/ontologies/ns/core/Event</code></td>
+            </tr>
+            <tr>
+                <th>Is Defined By</th>
+                <td>
+                    https://w3id.org/landrs/ontologies/ns/core/
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An event</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="https://w3id.org/landrs/ontologies/ns/core/Flight">Flight</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Flight">
+        <h3>Flight<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://w3id.org/landrs/ontologies/ns/core/Flight</code></td>
+            </tr>
+            <tr>
+                <th>Is Defined By</th>
+                <td>
+                    https://w3id.org/landrs/ontologies/ns/core/
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A flight</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="https://w3id.org/landrs/ontologies/ns/core/Event">Event</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
             </tr>
         </table>
     </div>
@@ -503,6 +566,8 @@
         <dd><code>http://www.w3.org/ns/dcat#</code></dd>
         <dt>dct</dt>
         <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>doap</dt>
+        <dd><code>http://usefulinc.com/ns/doap#</code></dd>
         <dt>foaf</dt>
         <dd><code>http://xmlns.com/foaf/0.1/</code></dd>
         <dt>opla</dt>
