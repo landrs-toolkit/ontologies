@@ -22,6 +22,8 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+@prefix cpo: <http://daselab.org/ContextualizedWinstonPartWhole#> .
+@prefix po: <http://daselab.org/WinstonPartWhole#> .
 
 foaf:Agent a owl:Class .
 foaf:name a owl:AnnotationProperty .
@@ -535,13 +537,13 @@ sdo:location rdf:type owl:ObjectProperty ;
 :SmartSensor a rdfs:Class, owl:Class ;
   rdfs:label "Smart Sensor"@en;
   rdfs:comment "Smart-Sensor - A SmartSensor is composed of one or more Sensors together with a MicroController that implements different Algorithms, and makes Algorithm Executions on the result of the Observations these Sensors make to output a resulting value for some Indicator. This value may then be communicated by some CommunicatingSystemCommunicatingSystem."@en;
-  rdfs:subClassOf landrs:Platform .
+  rdfs:subClassOf :Platform .
 
 :SensorPayload a rdfs:Class ;
   rdfs:label "Sensor Payload"@en ;
   rdfs:comment "Payload that is a instrument platform such as cameras, atmospheric sensors, etc"@en ;
   rdfs:subClassOf :payload ;
-  rdfs:subClassOf sosa:System .
+.
 
 :CompanionComputer a rdfs:Class ;
   rdfs:label "Companion Computer"@en ;
