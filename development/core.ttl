@@ -1,7 +1,7 @@
 # baseURI: https://w3id.org/landrs/ontologies/ns/core/
 # prefix: landrs-core
 
-@prefix : <https://w3id.org/landrs/ontologies/ns/core/> .
+@prefix : <https://w3id.org/landrs/ns/ontologies/core/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dct: <http://purl.org/dc/terms/> .
@@ -86,6 +86,7 @@ sdo:version a owl:AnnotationProperty .
             sdo:url <https://crc.nd.edu> ;
         ]
     ] ;
+  prof:isProfileOf <https://w3id.org/landrs/ns/ontologies/> ;
   prof:hasResource [
     a prof:ResourceDescriptor, sdo:WebAPI ;
 
@@ -95,9 +96,11 @@ sdo:version a owl:AnnotationProperty .
     # it uses content negotiation schema.org WebAPI spec
     # https://webapi-discovery.github.io/rfcs/rfc0001.html
     sdo:contentType "text/turtle" ;
+    sdo:contentType "application/ld+json" ;
+    sdo:contentType "application/n-triples";
 
     # has a url
-    sdo:url "https://w3id.org/landrs/ontologies/ns/core"
+    sdo:url "https://w3id.org/landrs/ontologies/ns/core" ;
 
     # it conforms to SHACL, here refered to by its namespace URI as a Profile
     # dct:conformsTo <http://www.w3.org/ns/owl-profile/RL> ;
@@ -106,12 +109,19 @@ sdo:version a owl:AnnotationProperty .
 
     # this profile resource plays the role of "Validation"
     # described in this ontology's accompanying Roles vocabulary
-    prof:hasRole role:schema ;
+    prof:hasRole role:vocabulary ;
 
     # this profile resource's actual file
-    prof:hasArtifact <https://w3id.org/landrs/ontologies/core/profile/core-owlrl.ttl>
+    # TODO: Correct URI for this resources
+   # prof:hasArtifact <https://w3id.org/landrs/ontologies/core/profile/core.ttl>
   ] ;
 .
+
+
+
+###################################################
+### Classes
+###################################################
 
 :Product a owl:Class ;
   rdfs:label "Product"@en ;
@@ -157,433 +167,418 @@ sdo:version a owl:AnnotationProperty .
   rdfs:comment ""@en ;
   rdfs:isDefinedBy : .
 
-landrs:AgentRole  rdf:type rdfs:Class, owl:Class;
+:AgentRole  rdf:type rdfs:Class, owl:Class;
                   rdfs:label "AgentRole" .
 
 ###  https://schema.landrs.org/schema/Agent
-landrs:Agent  rdf:type owl:Class ;
+:Agent  rdf:type owl:Class ;
               rdfs:label "Agent" .
 
 ###  https://schema.landrs.org/schema/Researcher
-landrs:Researcher rdf:type owl:Class ;
-                  rdfs:subClassOf landrs:AgentRole ;
+:Researcher rdf:type owl:Class ;
+                  rdfs:subClassOf :AgentRole ;
                   rdfs:label "Researcher" .
 
 ###  https://schema.landrs.org/schema/UxVOperator
-landrs:UxVOperator  rdf:type owl:Class, prov:SoftwareAgent ;
-                    rdfs:subClassOf landrs:AgentRole ;
+:UxVOperator  rdf:type owl:Class, prov:SoftwareAgent ;
+                    rdfs:subClassOf :AgentRole ;
                     rdfs:label "UxVOperator" .
 
 
 ###  http://schema.landrs.org/schema/providesAgentRole
-landrs:providesAgentRole  rdf:type owl:ObjectProperty ;
-                                rdfs:domains landrs:Flight ;
-                                rdfs:range landrs:AgentRole ;
+:providesAgentRole  rdf:type owl:ObjectProperty ;
+                                rdfs:domains :Flight ;
+                                rdfs:range :AgentRole ;
                                 rdfs:label "providesAgentRole" .
 
 ###  http://schema.landrs.org/schema/Place
-landrs:Place  rdf:type rdfs:Class, owl:Class ;
-              rdfs:subClassOf schema:Place ;
+:Place  rdf:type rdfs:Class, owl:Class ;
+              rdfs:subClassOf sdo:Place ;
               rdfs:label "Place"@en .
 
 ###  https://schema.org/location
-schema:location rdf:type owl:ObjectProperty ;
-                rdfs:domain landrs:Event ;
-                rdfs:range landrs:Place ;
+sdo:location rdf:type owl:ObjectProperty ;
+                rdfs:domain :Event ;
+                rdfs:range :Place ;
                 rdfs:label "location" .
 
-landrs:AerialVehicle  rdf:type  rdfs:Class ;
+:AerialVehicle  rdf:type  rdfs:Class ;
                       rdfs:label "Aerial Vehicle"@en ;
                       rdfs:comment "A machine that is able to fly by gaining support from the air other than the reactions of the air against the earth’s surface" ;
                       rdfs:comment "Synonym with Aircraft" ;
-                      rdfs:subClassOf landrs:Vehicle .
+                      rdfs:subClassOf :Vehicle .
 
-landrs:UnderwaterVehicle  rdf:type rdfs:Class ;
+:UnderwaterVehicle  rdf:type rdfs:Class ;
                           rdfs:label "Underwater Vehicle"@en ;
-                          rdfs:subClassOf landrs:Vehicle ;
+                          rdfs:subClassOf :Vehicle ;
                           prov:wasDerivedFrom [
                                                 a prov:Entity ;
-                                                dcterms:source <https://www.mdpi.com/185614> ;
-                                                schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-                                                dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+                                                dct:source <https://www.mdpi.com/185614> ;
+                                                sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+                                                dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
                                               ] .
 
-landrs:SurfaceVehicle a rdfs:Class ;
+:SurfaceVehicle a rdfs:Class ;
   rdfs:label "Surface Vehicle"@en ;
-  rdfs:subClassOf landrs:Vehicle ;
+  rdfs:subClassOf :Vehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:MotorizedVehicle a rdfs:Class ;
+:MotorizedVehicle a rdfs:Class ;
   rdfs:label "Motorized Vehicle"@en ;
-  rdfs:subClassOf landrs:Vehicle ;
+  rdfs:subClassOf :Vehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:UnmotorizedVehicle a rdfs:Class ;
+:UnmotorizedVehicle a rdfs:Class ;
   rdfs:label "Unmotorized Vehicle"@en ;
-  rdfs:subClassOf landrs:Vehicle ;
+  rdfs:subClassOf :Vehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:Robot a rdfs:Class ;
+:Robot a rdfs:Class ;
   rdfs:label "Robot"@en;
   rdfs:comment "Mechanical or virtual artificial agent carrying out physical activities"@en ;
-  rdfs:subClassOf landrs:Product ;
-  rdfs:subClassOf wd:Q11012 ;
-  rdfs:subClassOf cor:Robot ;
+  rdfs:subClassOf :Product ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:AutonomousRobot a rdfs:Class ;
+:AutonomousRobot a rdfs:Class ;
   rdfs:label "Autonomous Robot"@en ;
   rdfs:comment "An autonomous robot is a robot that performs behaviors or tasks with a high degree of autonomy (without external influence)."@en ;
-  rdfs:subClassOf landrs:Robot ;
-  rdfs:subClassOf wd:Q2916098 ;
+  rdfs:subClassOf :Robot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:RemotelyPilotedRobot a rdfs:Class ;
+:RemotelyPilotedRobot a rdfs:Class ;
   rdfs:label "Remotely Piloted Robot"@en ;
-  rdfs:subClassOf landrs:Robot ;
+  rdfs:subClassOf :Robot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:AutomatedRobot a rdfs:Class ;
+:AutomatedRobot a rdfs:Class ;
   rdfs:label "Automated Robot"@en ;
-  rdfs:subClassOf landrs:Robot ;
+  rdfs:subClassOf :Robot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:RoboticVehicle a rdfs:Class ;
+:RoboticVehicle a rdfs:Class ;
   rdfs:label "Robotic Vehicle"@en;
   rdfs:comment "Robotic vehicles are machines that move autonomously on the ground, in the air, undersea, or in space. Such vehicles are “unmanned,” in the sense that no humans are on board. In general, these vehicles move by themselves, under their own power, with sensors and computational resources onboard to guide their motion."@en ;
-  rdfs:subClassOf landrs:Vehicle ;
-  rdfs:subClassOf landrs:Robot ;
-  rdfs:subClassOf wd:Q4810574 ;
+  rdfs:subClassOf :Vehicle ;
+  rdfs:subClassOf :Robot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:UnderwaterRobot a rdfs:Class ;
+:UnderwaterRobot a rdfs:Class ;
   rdfs:label "Underwater Robot"@en ;
   rdfs:comment "Underwater Robots are vehicles that move autonomously underwater."@en ;
-  rdfs:subClassOf landrs:RoboticVehice ;
-  rdfs:subClassOf landrs:UnderwaterVehicle ;
+  rdfs:subClassOf :RoboticVehice ;
+  rdfs:subClassOf :UnderwaterVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:SurfaceRobot a rdfs:Class ;
+:SurfaceRobot a rdfs:Class ;
   rdfs:label "Underwater Robot"@en ;
   rdfs:comment "Surface Robots are vehicles that move autonomously on the water surface."@en ;
-  rdfs:subClassOf landrs:RoboticVehicle ;
-  rdfs:subClassOf landrs:SurfaceVehicle ;
+  rdfs:subClassOf :RoboticVehicle ;
+  rdfs:subClassOf :SurfaceVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:AerialRobot a rdfs:Class ;
+:AerialRobot a rdfs:Class ;
   rdfs:label "Aerial Robot"@en ;
   rdfs:comment "Aerial Robots are vehicles that move autonomously in the air."@en ;
-  rdfs:subClassOf landrs:RoboticVehice ;
-  rdfs:subClassOf landrs:AerialVehicle .
+  rdfs:subClassOf :RoboticVehice ;
+  rdfs:subClassOf :AerialVehicle .
 
 
 
-landrs:AUV a rdfs:Class ;
+:AUV a rdfs:Class ;
   rdfs:label "Autonomous Underwater Vehicle"@en ;
   skos:altLabel "AUV"@en ;
   rdfs:comment "An autonomous underwater vehicle (AUV) is a robot that travels underwater without requiring input from an operator."@en ;
-  rdfs:subClassOf landrs:UnderwaterRobot ;
-  rdfs:subClassOf landrs:AutonomousRobot ;
+  rdfs:subClassOf :UnderwaterRobot ;
+  rdfs:subClassOf :AutonomousRobot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:ROV a rdfs:Class ;
+:ROV a rdfs:Class ;
   rdfs:label "Remotely Operated Underwater Vehicle"@en ;
   skos:altLabel "ROV"@en ;
-  rdfs:subClassOf landrs:UnderwaterRobot ;
-  rdfs:subClassOf landrs:MotorizedVehicle ;
+  rdfs:subClassOf :UnderwaterRobot ;
+  rdfs:subClassOf :MotorizedVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
 
-landrs:UnderwaterGlider a rdfs:Class ;
+:UnderwaterGlider a rdfs:Class ;
   rdfs:label "Underwater Glider"@en ;
   rdfs:comment "An underwater glider is a type of autonomous underwater vehicle (AUV) that employs variable-buoyancy propulsion instead of traditional propellers or thrusters. It employs variable buoyancy in a similar way to a profiling float, but unlike a float, which can only move up and down, an underwater glider is fitted with hydrofoils (underwater wings) that allow it to glide forward while descending through the water. At a certain depth, the glider switches to positive buoyancy to climb back up, and the cycle is then repeated."@en ;
-  rdfs:subClassOf landrs:AUV ;
-  rdfs:subClassOf landrs:UnmotorizedVehicle ;
+  rdfs:subClassOf :AUV ;
+  rdfs:subClassOf :UnmotorizedVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:ASV a rdfs:Class ;
+:ASV a rdfs:Class ;
   rdfs:label "Autonomous Surface Vehicle"@en ;
   skos:altLabel "ASV";
   rdfs:comment "Vehicle that operates on the surface of the water without a crew"@en ;
-  rdfs:subClassOf landrs:AutonomousRobot ;
-  rdfs:subClassOf landrs:SurfaceRobot ;
+  rdfs:subClassOf :AutonomousRobot ;
+  rdfs:subClassOf :SurfaceRobot ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
 # This may be a problem since wikidata treats ASV and USV as equivalent
-landrs:USV a rdfs:Class ;
+:USV a rdfs:Class ;
   rdfs:label "Unmanned Surface Vehicle"@en ;
   skos:altLabel "USV"@en ;
   rdfs:comment "Vehicle that operates on the surface of the water without a crew"@en ;
-  rdfs:subClassOf landrs:SurfaceRobot ;
-  rdfs:subClassOf landrs:MotorizedVehicle ;
+  rdfs:subClassOf :SurfaceRobot ;
+  rdfs:subClassOf :MotorizedVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
   ] .
 
-landrs:Vessel a rdfs:Class ;
+:Vessel a rdfs:Class ;
   rdfs:label "Vessel"@en ;
-  rdfs:comment "Vehicle that is a watercraft, boat, or ship. Note: Wikidata definition of vessel includes spaceship this landrs:Vessel is a subClassOf wikidata vessel."@en ;
-  rdfs:subClassOf landrs:SurfaceVehicle ;
-  rdfs:subClassOf landrs:MotorizedVehicle ;
-  rdfs:subClassOf wd:Q16391167 ;
+  rdfs:comment "Vehicle that is a watercraft, boat, or ship. Note: Wikidata definition of vessel includes spaceship this :Vessel is a subClassOf wikidata vessel."@en ;
+  rdfs:subClassOf :SurfaceVehicle ;
+  rdfs:subClassOf :MotorizedVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
-  ] .
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+  ] ;
+.
 
-landrs:Buoy a rdfs:Class ;
+:Buoy a rdfs:Class ;
   rdfs:label "Buoy"@en ;
   rdfs:comment "A floating device that can be anchored (stationary) or allowed to drift with ocean currents."@en ;
-  rdfs:subClassOf landrs:UnmotorizedVehicle ;
-  rdfs:subClassOf wd:Q30026 ;
+  rdfs:subClassOf :UnmotorizedVehicle ;
   prov:wasDerivedFrom [
     a prov:Entity ;
-    dcterms:source <https://www.mdpi.com/185614> ;
-    schema:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
-    dcterms:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
-  ] .
+    dct:source <https://www.mdpi.com/185614> ;
+    sdo:identifier "https://dx.doi.org/10.3390%2Fs17030569" ;
+    dct:title "SWARMs Ontology: A Common Information Model for the Cooperation of Underwater Robots"@en
+  ] ;
+.
 
-landrs:UxV a rdfs:Class ;
+:UxV a rdfs:Class ;
   rdfs:label "Unmanned Vehicle"@en ;
   rdfs:comment "An unmanned vehicle or uncrewed vehicle is a vehicle without a person on board. Uncrewed vehicles can either be remote controlled or remote guided vehicles, or they can be autonomous vehicles which are capable of sensing their environment and navigating on their own."@en ;
   skos:prefLabel "Unmanned Vehicle"@en ;
   skos:altLabel "UxV"@en ;
-  rdfs:subClassOf landrs:Vehicle ;
-  rdfs:subClassOf sosa:Platform ;
-  rdfs:subClassOf landrs:Agent ;
-  owl:equivalentClass wd:Q1527901 .
+  rdfs:subClassOf :Vehicle ;
+  rdfs:subClassOf :Agent ;
+.
 
 
-landrs:UAV a rdfs:Class ;
+:UAV a rdfs:Class ;
   rdfs:label "Unmanned Aerial Vehicle"@en ;
   rdfs:comment "An aircraft without a human pilot on board and a type of unmanned vehicle. UAVs are a component of an unmanned aircraft system (UAS); which include a UAV, a ground-based controller, and a system of communications between the two. The flight of UAVs may operate with various degrees of autonomy: either under remote control by a human operator or autonomously by onboard computers." ;
   skos:prefLabel "Unmanned Aerial Vehicle"@en ;
   skos:altLable "UAV"@en ;
-  rdfs:subClassOf landrs:UxV ;
-  rdfs:subClassOf eqp:Aircraft ;
-  rdfs:subClassOf landrs:AerialRobot ;
-  rdfs:subClassOf landrs:MotorizedVehicle ;
-  rdfs:subClassOf <http://vocab.nerc.ac.uk/collection/L06/current/6D/> ;
-  rdfs:subClassOf <https://mmisw.org/ont/ioos/platform/unmanned_aerial_vehicle> ;
-  rdfs:subClassOf wd:Q484000 ;
-  rdfs:subClassOf dbr:Unmanned_aerial_vehicle ;
-  landrs:component landrs:UAS .
+  rdfs:subClassOf :UxV ;
+  rdfs:subClassOf :AerialRobot ;
+  rdfs:subClassOf :MotorizedVehicle ;
+  :component :UAS ;
+.
 
-landrs:UAS a rdfs:Class ;
+:UAS a rdfs:Class ;
   rdfs:label "Unmanned Aircraft System"@en ;
   rdfs:comment "An Unmanned Aerial Vehicle, ground-based controller and communication system."@en ;
   skos:prefLabel "Unmanned Aircraft System"@en ;
   skos:altLabel "UAS"@en ;
-  rdfs:subClassOf landrs:Product .
+  rdfs:subClassOf :Product ;
+.
 
-landrs:GroundControlStation a rdfs:Class ;
+:GroundControlStation a rdfs:Class ;
   rdfs:label "Ground Control Station"@en ;
   rdfs:comment "A ground control station (GCS) is a land- or sea-based control center that provides the facilities for human control of Unmanned Aerial Vehicles (UAVs or drones)."@en ;
-  rdfs:equivalentClass wd:Q4118990 ;
-  rdfs:subClassOf landrs:Product ;
+  rdfs:subClassOf :Product ;
   rdfs:seeAlso <https://en.wikipedia.org/wiki/Ground_control_station> ;
-  landrs:component landrs:UAS ;
-  landrs:isPartOf [
-    rdf:type landrs:Component ;
-    landrs:hasWhole landrs:UAS
+  :component :UAS ;
+  :isPartOf [
+    rdf:type :Component ;
+    :hasWhole :UAS
   ] .
 
-landrs:CommunicationSystem a rdfs:Class ;
+:CommunicationSystem a rdfs:Class ;
   rdfs:label "Communication System"@en ;
   rdfs:comment "Communication System, frequency and protocol by which a UxS communicates. For example Civilian UAV communications systems typically operate on frequencies of 2.4 GHz and 5.8 GHz. UAV communications systems work by using one frequency to control the aerial vehicle from the ground via a remote pilot while the other frequency is used to beam or relay First-Person View (FPV) video. By utilizing high-quality, reliable communications links, civilian UAVs are able to relay aerial visuals and data to those on the ground with ease, while still remaining in flight."@en ;
-  rdfs:subClassOf landrs:Product ;
-  rdfs:subClassOf ssn:System ;
-  rdfs:subClassOf wd:Q31479975 ;
-  rdfs:subClassOf s3n:CommunicatingSystem ;
-  landrs:component landrs:UAS ;
-  landrs:isPartOf [
-    rdf:type landrs:Component, landrs:UAVComponent ;
-    landrs:hasWhole landrs:UAS
-  ] .
+  rdfs:subClassOf :Product ;
+  :component :UAS ;
+  :isPartOf [
+    rdf:type :Component, :UAVComponent ;
+    :hasWhole :UAS
+  ] ;
+.
 
-landrs:Component a rdfs:Class ;
+:Component a rdfs:Class ;
   rdfs:label "Component"@en ;
   rdfs:comment "Winston Part-Whole PO-Component-Type to enumerate composition of a UxV"@en ;
-  rdfs:subClassOf landrs:Product ;
-  owl:equivalentClass wd:Q811909 ;
+  rdfs:subClassOf :Product ;
   owl:equivalentClass cpo:PO-Component-Type ;
   opla:isNativeTo <https://raw.githubusercontent.com/cogan-shimizu-wsu/ContextualizedWinstonPartWhole/master/ContextualizedWinstonPartWhole.owl> .
 
-landrs:UAVComponent a rdfs:Class ;
+:UAVComponent a rdfs:Class ;
   rdfs:label "Unmanned Aircraft Component"@en;
   rdfs:comment "Component of a Unmanned Aerial Vehicle"@en;
-  rdfs:subClassOf landrs:Component ;
-  rdfs:subClassOf wd:Q28816538 .
+  rdfs:subClassOf :Component ;
+.
 
 
-landrs:Body a rdfs:Class, landrs:UAVComponent ;
+:Body a rdfs:Class, :UAVComponent ;
   rdfs:label "UxV Body"@en ;
   rdfs:comment "Body of the UxV, for a UAV this would be an airframe"@en ;
-  rdfs:subClassOf landrs:Product ;
-  landrs:component landrs:UxV ;
-  landrs:isPartOf [
-    rdf:type landrs:Component, landrs:UAVComponent;
-    landrs:hasWhole landrs:UxV
-  ] .
+  rdfs:subClassOf :Product ;
+  :component :UxV ;
+  :isPartOf [
+    rdf:type :Component, :UAVComponent;
+    :hasWhole :UxV
+  ] ;
+.
 
 
-landrs:bodyType a rdf:Property ;
-    rdfs:label "bodyType"@en ;
-    dcterms:source <http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#Automotive_Ontology_Working_Group> ;
-    schema:domainIncludes schema:Vehicle ;
-    schema:isPartOf <http://auto.schema.org> ;
-    schema:rangeIncludes schema:QualitativeValue,
-        schema:Text,
-        schema:URL ;
-    rdfs:comment "Indicates the design and body style of the vehicle (e.g. quadcopter, glider."@en .
-
-
-landrs:Airframe a rdfs:Class ;
+:Airframe a rdfs:Class ;
   rdfs:label "Airframe"@en ;
   rdfs:comment "The mechanical structure of an aircraft is known as the airframe. This structure is typically considered to include the fuselage, undercarriage, empennage and wings, and exclude the propulsion system."@en ;
-  rdfs:subClassOf landrs:Body ;
-  owl:equivalentClass wd:Q222946 .
+  rdfs:subClassOf :Body ;
+.
 
 
-landrs:Autopilot a rdfs:Class ;
-  rdfs:subClassOf aero:software-agent ;
-  rdfs:subClassOf  eqp:AircraftNavigationSystem ;
-  rdfs:subClassOf schema:SoftwareApplicaion ;
-  rdfs:subClassOf s3n:Algorithm ;
+:Autopilot a rdfs:Class ;
+  rdfs:subClassOf sdo:SoftwareApplicaion ;
   rdfs:label "Autopilot"@en ;
   rdfs:comment "Software to control and navigate an aircraft"@en ;
   skos:altLabel "Flight Controller"@en ;
   skos:altLabel "Flight Controller Board"@en ;
-  landrs:component landrs:FlightControlSystem ;
-  landrs:isPartOf [
-    rdf:type landrs:Component ;
-    landrs:hasWhole landrs:FlightControlSystem
-  ] .
+  :component :FlightControlSystem ;
+  :isPartOf [
+    rdf:type :Component ;
+    :hasWhole :FlightControlSystem
+  ] ;
+.
 
 
-landrs:Payload a rdfs:Class ;
+:Payload a rdfs:Class ;
   rdfs:label "Payload"@en ;
   rdfs:comment "Unmanned vehicle payload"@en ;
-  rdfs:subClassOf wd:Q319224 ;
-  landrs:component landrs:UAS ;
-  landrs:isPartOf [
-    rdf:type landrs:Component ;
-    landrs:hasWhole landrs:UAS
-  ] .
+  :component :UAS ;
+  :isPartOf [
+    rdf:type :Component ;
+    :hasWhole :UAS
+  ] ;
+.
 
-landrs:SmartSensor a rdfs:Class, owl:Class ;
+:SmartSensor a rdfs:Class, owl:Class ;
   rdfs:label "Smart Sensor"@en;
   rdfs:comment "Smart-Sensor - A SmartSensor is composed of one or more Sensors together with a MicroController that implements different Algorithms, and makes Algorithm Executions on the result of the Observations these Sensors make to output a resulting value for some Indicator. This value may then be communicated by some CommunicatingSystemCommunicatingSystem."@en;
-  schema:sameAs s3n:SmartSensor ;
-  rdfs:subClassOf ssn:System ;
-  rdfs:subClassOf sosa:Platform .
+  rdfs:subClassOf landrs:Platform .
 
-landrs:SensorPayload a rdfs:Class ;
+:SensorPayload a rdfs:Class ;
   rdfs:label "Sensor Payload"@en ;
   rdfs:comment "Payload that is a instrument platform such as cameras, atmospheric sensors, etc"@en ;
-  rdfs:subClassOf landrs:payload ;
+  rdfs:subClassOf :payload ;
   rdfs:subClassOf sosa:System .
 
-landrs:CompanionComputer a rdfs:Class ;
+:CompanionComputer a rdfs:Class ;
   rdfs:label "Companion Computer"@en ;
   rdfs:comment "A companion computer is a device that travels on-board the vehicle and controls/communicates with the autopilot over a low-latency link. Apps running on a companion computer can perform computationally intensive or time-sensitive tasks, and add much greater intelligence than is provided by the autopilot alone." ;
-  rdfs:subClassOf landrs:payload ;
-  rdfs:subClassOf ssn:System ;
-  rdfs:subClassOf landrs:Product ;
-  rdfs:subClassOf wd:Q944780 ;
-  rdfs:subClassOf s3n:MicroController ;
-  wdt:P279 wd:Q944780 .
+  rdfs:subClassOf :Payload ;
+  rdfs:subClassOf :Product ;
+.
 
-landrs:FlightControllerBoard a rdfs:Class ;
+
+:FlightControllerBoard a rdfs:Class ;
   rdfs:label "Flight Controller Board"@en ;
   rdfs:comment "A flight controller (FC) is a small circuit board of varying complexity. Its function is to direct the RPM of each motor in response to input. A command from the pilot for the multi-rotor to move forward is fed into the flight controller, which determines how to manipulate the motors accordingly."@en ;
   rdfs:seeAlso <https://dronekit-python.readthedocs.io/en/latest/develop/companion-computers.html> ;
-  rdfs:subClassOf landrs:Product ;
-  rdfs:subClassOf sosa:System ;
-  rdfs:subClassOf s3n:MicroController ;
-  landrs:component landrs:FlightControlSystem ;
-  landrs:isPartOf [
-    rdf:type landrs:Component ;
-    landrs:hasWhole landrs:FlightControlSystem
-  ] .
+  rdfs:subClassOf :Product ;
+  :component :FlightControlSystem ;
+  :isPartOf [
+    rdf:type :Component ;
+    :hasWhole :FlightControlSystem
+  ] ;
+.
 
-landrs:FlightControlSystem a rdfs:Class ;
+:FlightControlSystem a rdfs:Class ;
   rdfs:label "Flight Control System"@en ;
   rdfs:comment "Aircraft system utilized to control flight surfaces"@en ;
-  owl:equivalentClass wd:Q11481471 .
+.
+###################################################
+### Properties
+###################################################
 
+
+
+:bodyType a rdf:Property ;
+    rdfs:label "bodyType"@en ;
+    dct:source <http://www.w3.org/wiki/Websdos/sdoDotOrgSources#Automotive_Ontology_Working_Group> ;
+    sdo:domainIncludes sdo:Vehicle ;
+    sdo:isPartOf <http://auto.sdo.org> ;
+    sdo:rangeIncludes sdo:QualitativeValue,
+        sdo:Text,
+        sdo:URL ;
+    rdfs:comment "Indicates the design and body style of the vehicle (e.g. quadcopter, glider."@en .
