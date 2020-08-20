@@ -1,4 +1,6 @@
-@prefix : <https://w3id.org/landrs/ns/ontologies/> .
+@prefix landrs-core: <https://w3id.org/landrs/ns/ontologies/> .
+
+
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix doap: <http://usefulinc.com/ns/doap#> .
