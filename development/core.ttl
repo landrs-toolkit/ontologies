@@ -1,7 +1,7 @@
 # baseURI: https://w3id.org/landrs/ontologies/ns/core/
 # prefix: landrs-core
 
-@prefix : <https://w3id.org/landrs/ns/ontologies/core/> .
+@prefix : <https://w3id.org/landrs/def/ontologies/core/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dct: <http://purl.org/dc/terms/> .
@@ -406,6 +406,7 @@ sdo:location rdf:type owl:ObjectProperty ;
   rdfs:comment "Vehicle that is a watercraft, boat, or ship. Note: Wikidata definition of vessel includes spaceship this :Vessel is a subClassOf wikidata vessel."@en ;
   rdfs:subClassOf :SurfaceVehicle ;
   rdfs:subClassOf :MotorizedVehicle ;
+  sdo:source <https://www.mdpi.com/185614> ;
   prov:wasDerivedFrom [
     a prov:Entity ;
     dct:source <https://www.mdpi.com/185614> ;
