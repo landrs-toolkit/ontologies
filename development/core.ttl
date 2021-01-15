@@ -70,7 +70,7 @@ sdo:version a owl:AnnotationProperty .
   dct:creator [
         sdo:name "Charles F Vardeman II" ;
         sdo:identifier <https://orcid.org/0000-0003-4091-6059> ;
-        sdo:email <cvardema@nd.edu> ;
+        sdo:email "mailto:cvardema@nd.edu" ;
         sdo:affiliation [
           sdo:name "University of Notre Dame, Center for Research Computing" ;
           sdo:url <https://crc.nd.edu> ;
