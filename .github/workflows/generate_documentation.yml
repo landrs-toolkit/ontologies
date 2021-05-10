@@ -1,0 +1,32 @@
+name: generate documentation
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: "3.x"
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: "x64"
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          java-package: jdk
+          architecture: x64
+      # You can test your matrix by printing the current Python version
+      - name: Generate docs
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          sh ./bin/provision_robot.sh
+          $GITHUB_WORKSPACE/bin/robot --help
+          sh ./bin/provision_webvowl.sh
+          python3 builddocs 1.0.4
