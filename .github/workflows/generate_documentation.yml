@@ -29,3 +29,4 @@ jobs:
           sh ./bin/provision_robot.sh
           $GITHUB_WORKSPACE/bin/robot --help
           sh ./bin/provision_webvowl.sh
+          python3 builddocs 1.0.4

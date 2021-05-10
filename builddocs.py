@@ -40,7 +40,7 @@ for inputFile in allFiles:
                   ontologyPath + "/" + inputFile + " --format owl --output " + outputOWLFileName + " -vv")
         print("...done")
 
-# get all files again--to include the newly converted tutle files
+# get all files again--to include the newly converted turtle files
 allFiles = [f for f in listdir(ontologyPath) if isfile(
     join(ontologyPath, f))]  # all files in folder for converting to vowl
 
