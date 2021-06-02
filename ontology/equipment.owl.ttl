@@ -1,11 +1,5 @@
-# baseURI: https://w3id.org/drone/equipment
-# imports: http://datashapes.org/dash
-# imports: http://topbraid.org/schema/schema-single-range
-
 # https://docs.ogc.org/per/20-020.html#_equipment_ontology
-# Vocabulary definnitionns using RDFS (schema.org) class properties
-# with labels and subClassOf relationships
-# https://spinrdf.org/shacl-and-owl.html
+
 @prefix : <https://w3id.org/drone/equipment#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -67,9 +61,8 @@
                             foaf:maker [ foaf:homepage <https://www.landrs.org> ;
                                          foaf:name "Linked-data API for Networked Drones (LANDRS) project"@en
                                        ] ;
-                           # owl:imports <https://w3id.org/drone/agents> ;
-                           #  owl:imports <https://w3id.org/drone/identifier> ;
-                            .
+                            owl:imports <https://w3id.org/drone/agents> ;
+                            owl:imports <https://w3id.org/drone/identifier> .
 
 
 
@@ -77,45 +70,124 @@
 #    Annotation properties
 #################################################################
 
+###  http://purl.org/dc/elements/1.1/creator
+dct:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+dct:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+dct:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+dct:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+dct:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dct:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dct:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dct:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dct:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dct:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dct:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dct:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dct:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+vann:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+### https://schema.org/domainInculdes
+schema:domainIncludes rdf:type owl:AnnotationProperty .
+
+### https://schema.org/rangeIncludes
+schema:rangeIncludes rdf:type owl:AnnotationProperty .
+
+
 #################################################################
 #    Object Properties
 #################################################################
-equipment:ownerOf a rdf:Property ;
+equipment:ownerOf a owl:ObjectProperty ;
   rdfs:subPropertyOf schema:owns ;
   rdfs:label "ownerOf"@en ;
   rdfs:comment "Agent role of ownership of some equipment"@en ;
-  schema:domainIncludes agents:Agent;
-  schema:rangeIncludes equipment:Equipment ;
+  schema:domainIncludes schema:;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf (agents:AgentRole
+                  prov:Agent
+                  equipment:EquipmentOwner
+    )
+  ] ;
+  rdfs:range [
+    a owl:Class ;
+    owl:unionOf(
+    schema:Product
+    equipment:Equipment
+    )
+  ]
 .
 
-equipment:ownedBy a rdf:Property ;
+equipment:ownedBy a owl:ObjectProperty ;
   rdfs:label "ownedBy"@en ;
   owl:inverseOf equipment:ownerOf ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes agents:Agent ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range agents:Agent ;
 .
 
-equipment:operatedBy a rdf:Property ;
+equipment:operatedBy a owl:ObjectProperty ;
   rdfs:label "operatedBy"@en ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes  agents:Agent ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range  agents:Agent ;
 .
 
-equipment:registeredBy a rdf:Property ;
+equipment:registeredBy a owl:ObjectProperty ;
   rdfs:label "registeredBy" ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes  agents:agent ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range  agents:agent ;
 .
 
 
 
 
-equipment:equipmentType a rdf:Property ;
+equipment:equipmentType a owl:ObjectProperty ;
   rdfs:label "equipmentType"@en ;
   rdfs:comment "A type class of equipment"@en ;
 .
 
-equipment:equipmentModel a rdf:Property ;
+equipment:equipmentModel a owl:ObjectProperty ;
   rdfs:label "equipmentModel"@en ;
   rdfs:subPropertyOf schema:model ;
   schema:domainIncludes schema:Product ;
@@ -123,7 +195,7 @@ equipment:equipmentModel a rdf:Property ;
         schema:Text ;
 .
 
-equipment:manufacturedBy a rdf:Property ;
+equipment:manufacturedBy a owl:ObjectProperty ;
   rdfs:subPropertyOf schema:manufacturer ;
   rdfs:label "manufacturedBy"@en ;
 .
@@ -134,64 +206,64 @@ equipment:manufacturedBy a rdf:Property ;
 #################################################################
 equipment:modelNumber a owl:DataTypeProperty ;
   rdfs:label "model number" ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes xsd:string ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range xsd:string ;
 .
 
 equipment:registrationNumber a owl:DataTypeProperty ;
   rdfs:label "registration number" ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes xsd:string ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range xsd:string ;
 .
 
 equipment:registrationDate a owl:DataTypeProperty ;
   rdfs:label "registration date" ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes xsd:dateTime ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range xsd:dateTime ;
 .
 
 identifier:identifier a owl:DataTypeProperty ;
-  schema:domainIncludes equipment:Equipment ;
-  schema:rangeIncludes xsd:string ;
+  rdfs:domain equipment:Equipment ;
+  rdfs:range xsd:string ;
 .
 #################################################################
 #    Classes
 #################################################################
-equipment:Equipment a rdfs:Class ;
+equipment:Equipment a owl:Class ;
   rdfs:subClassOf schema:Product ;
   rdfs:label "Equipment"@en ;
 .
 
-equipment:Manufacturer a rdfs:Class ;
+equipment:Manufacturer a owl:Class ;
   rdfs:subClassOf prov:Agent ;
   rdfs:subClassOf schema:Organization ;
   rdfs:label "Manufacturer"@en ;
 .
 
-equipment:EquipmentModel a rdfs:Class ;
+equipment:EquipmentModel a owl:Class ;
   rdfs:subClassOf schema:ProductModel ;
   rdfs:label "Equipment Model"@en ;
 .
 
-equipment:EquipmentType a rdfs:Class ;
+equipment:EquipmentType a owl:Class ;
   rdfs:label "Equipment Type"@en ;
 .
 
-equipment:EquipmentOwner a rdfs:Class ;
+equipment:EquipmentOwner a owl:Class ;
   rdfs:subClassOf agents:agentRole ;
   rdfs:label "Equipment Owner"@en
 .
 
-equipment:EquipmentPart a rdfs:Class ;
+equipment:EquipmentPart a owl:Class ;
   rdfs:label "Equipment Part"@en ;
 .
 
-equipment:EquipmentOperator a rdfs:Class ;
+equipment:EquipmentOperator a owl:Class ;
   rdfs:subClassOf agents:AgentRole ;
   rdfs:label "Equipment Operator"@en ;
 .
 
-equipment:Identifier a rdfs:Class ;
+equipment:Identifier a owl:Class ;
   rdfs:label "Identifier" ;
 .
 

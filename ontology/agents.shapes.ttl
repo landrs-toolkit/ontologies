@@ -1,0 +1,49 @@
+# baseURI: https://w3id.org/drone/agents.shapes
+# imports: http://datashapes.org/dash
+# imports: https://w3id.org/drone/agents
+
+@prefix : <https://w3id.org/drone/agents#> .
+@prefix agents: <https://w3id.org/drone/agents#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+agents:Agent
+  rdf:type sh:NodeShape ;
+.
+agents:AgentRole
+  rdf:type sh:NodeShape ;
+  rdfs:label "Agent role" ;
+  sh:property [
+      rdf:type sh:PropertyShape ;
+      sh:path <http://www.w3.org/2006/time#hasBeginning> ;
+      sh:datatype xsd:dateTime ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+      sh:name "has beginning" ;
+    ] ;
+  sh:property [
+      rdf:type sh:PropertyShape ;
+      sh:path agents:isPerformedBy ;
+      sh:class agents:Agent ;
+      sh:minCount 1 ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      rdf:type sh:PropertyShape ;
+      sh:path agents:providesAgentRole ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+.
+agents:RoleDuration
+  rdf:type sh:NodeShape ;
+.
+<https://w3id.org/drone/agents.shapes>
+  rdf:type owl:Ontology ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:imports <https://w3id.org/drone/agents> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
