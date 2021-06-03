@@ -129,6 +129,7 @@ equipment:manufacturedBy a rdf:Property ;
 .
 
 
+
 #################################################################
 #    Data properties
 #################################################################
@@ -158,41 +159,54 @@ identifier:identifier a owl:DataTypeProperty ;
 #    Classes
 #################################################################
 equipment:Equipment a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf schema:Product ;
   rdfs:label "Equipment"@en ;
 .
 
 equipment:Manufacturer a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf prov:Agent ;
   rdfs:subClassOf schema:Organization ;
   rdfs:label "Manufacturer"@en ;
 .
 
 equipment:EquipmentModel a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf schema:ProductModel ;
   rdfs:label "Equipment Model"@en ;
 .
 
 equipment:EquipmentType a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:label "Equipment Type"@en ;
 .
 
 equipment:EquipmentOwner a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf agents:agentRole ;
   rdfs:label "Equipment Owner"@en
 .
 
 equipment:EquipmentPart a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:label "Equipment Part"@en ;
 .
 
 equipment:EquipmentOperator a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf agents:AgentRole ;
   rdfs:label "Equipment Operator"@en ;
 .
 
 equipment:Identifier a rdfs:Class ;
-  rdfs:label "Identifier" ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:label "Identifier"@en ;
+.
+equipment:Product a rdfs:Class ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf schema:Product ;
+  rdfs:label "Product"@en ;
 .
 
 #################################################################

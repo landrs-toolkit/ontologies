@@ -15,8 +15,8 @@
 agents:Agent
   rdf:type rdfs:Class ;
   rdfs:label "Agent" ;
-  rdfs:subClassOf owl:Thing ;
 .
+
 agents:AgentRole
   rdf:type rdfs:Class ;
   rdfs:label "Agent role" ;
@@ -58,6 +58,7 @@ agents:providesAgentRole
 .
 <https://w3id.org/drone/agents>
   rdf:type owl:Ontology ;
+  rdf:type prov:Entity ;
   owl:imports <http://topbraid.org/schema/> ;
   owl:imports <http://www.w3.org/2006/time> ;
   owl:imports <http://www.w3.org/ns/prov> ;
