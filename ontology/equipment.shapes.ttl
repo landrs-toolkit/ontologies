@@ -19,7 +19,6 @@
 equipment:Equipment
   rdf:type sh:NodeShape ;
   rdfs:label "Equipment shape" ;
-  rdfs:subClassOf rdfs:Resource ;
   sh:property [
       rdf:type sh:PropertyShape ;
       sh:path equipment:manufacturedBy ;
@@ -87,7 +86,6 @@ equipment:Equipment
 equipment:EquipmentModel
   rdf:type sh:NodeShape ;
   rdfs:label "Equipment shape" ;
-  rdfs:subClassOf rdfs:Resource ;
   sh:property [
       rdf:type sh:PropertyShape ;
       sh:path :equipmentType ;
@@ -118,12 +116,10 @@ equipment:EquipmentModel
 equipment:EquipmentOperator
   rdf:type sh:NodeShape ;
   rdfs:label "Equipment shape" ;
-  rdfs:subClassOf rdfs:Resource ;
 .
 equipment:EquipmentOwner
   rdf:type sh:NodeShape ;
   rdfs:label "Equipment shape" ;
-  rdfs:subClassOf rdfs:Resource ;
   sh:property [
       rdf:type sh:PropertyShape ;
       sh:path :ownerOf ;
@@ -135,17 +131,14 @@ equipment:EquipmentOwner
 equipment:EquipmentPart
   rdf:type sh:NodeShape ;
   rdfs:label "Equipment shape" ;
-  rdfs:subClassOf rdfs:Resource ;
 .
 equipment:EquipmentType
   rdf:type sh:NodeShape ;
   rdfs:label "EquipmentType Shape" ;
-  rdfs:subClassOf rdfs:Resource ;
 .
 equipment:Manufacturer
   rdf:type sh:NodeShape ;
   rdfs:label "Manufacturer shape" ;
-  rdfs:subClassOf rdfs:Resource ;
 .
 <https://w3id.org/drone/equipment.shapes>
   rdf:type owl:Ontology ;

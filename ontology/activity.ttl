@@ -1,0 +1,48 @@
+# baseURI: https://w3id.org/drone/activity
+# imports: http://www.w3.org/2006/time
+# prefix: activity
+
+@prefix activity: <https://w3id.org/drone/activity#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/drone/activity>
+  rdf:type owl:Ontology ;
+  owl:imports <http://www.w3.org/2006/time> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+activity:Activity
+  rdf:type owl:Class ;
+  rdfs:label "Activity" ;
+  rdfs:subClassOf time:TemporalEntity ;
+.
+activity:Event
+  rdf:type owl:Class ;
+  rdfs:label "Event" ;
+  rdfs:subClassOf time:TemporalEntity ;
+.
+activity:hasEndEvent
+  rdf:type rdf:Property ;
+  rdfs:domain activity:Activity ;
+  rdfs:label "has end event" ;
+  rdfs:range activity:Event ;
+.
+activity:hasEvent
+  rdf:type rdf:Property ;
+  rdfs:label "has event" ;
+.
+activity:hasStartEvent
+  rdf:type rdf:Property ;
+  rdfs:label "has start event" ;
+.
+activity:hasSubactivity
+  rdf:type rdf:Property ;
+  rdfs:label "has subactivity" ;
+.
+activity:subActivityOf
+  rdf:type rdf:Property ;
+  rdfs:label "sub activity of" ;
+.
